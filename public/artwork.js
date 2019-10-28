@@ -7,6 +7,6 @@ export default class Artwork {
   }
 
   setOwner(owner) {
-    this._owner = owner
+    this._owners = [owner]
   }
 }

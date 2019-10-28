@@ -19,9 +19,10 @@ function App() {
     const fetchRevs = async () => {
       setBalance(await computer.db.wallet.getBalance())
       setRevs(await Computer.getOwnedRevs(computer.db.wallet.getPublicKey()))
+      setTimeout(fetchRevs, 5000)
     }
     fetchRevs()
-  }, [computer.db.wallet])
+  }, [])
 
   useEffect(() => {
     const fetchArtworks = async () => {

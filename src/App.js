@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 import Computer from 'bitcoin-computer'
-import logo from './logo.svg';
-import './App.css';
+import './App.css'
 
 function App() {
   const [computer] = useState(new Computer({ seed: 'emotion drill fun purpose visit voyage office ancient inform chunk tuition hope'}))
@@ -12,9 +11,26 @@ function App() {
   const [year, setYear] = useState('')
   const [url, setUrl] = useState('')
 
-  useEffect(async () => {
-    setBalance(await computer.db.wallet.getBalance())
+  const [revs, setRevs] = useState([])
+  const [artworks, setArtworks] = useState([])
+
+  useEffect(() => {
+    const fetchRevs = async () => {
+      setBalance(await computer.db.wallet.getBalance())
+      setRevs(await Computer.getOwnedRevs(computer.db.wallet.getPublicKey()))
+    }
+    fetchRevs()
   }, [computer.db.wallet])
+
+  useEffect(() => {
+    const fetchArtworks = async () => {
+      setArtworks(await Promise.all(revs.map(async rev => computer.sync(rev))))
+    }
+    fetchArtworks()
+  }, [revs])
+
+  useEffect(() => console.log('revs', revs), [revs])
+  useEffect(() => console.log('artworks', artworks), [artworks])
 
   const handleSubmit = async (evt) => {
     evt.preventDefault()

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Computer from 'bitcoin-computer'
 import './App.css'
+import Card from './card'
 
 function App() {
   const [computer] = useState(new Computer({ seed: 'emotion drill fun purpose visit voyage office ancient inform chunk tuition hope'}))
@@ -27,7 +28,7 @@ function App() {
       setArtworks(await Promise.all(revs.map(async rev => computer.sync(rev))))
     }
     fetchArtworks()
-  }, [revs])
+  }, [revs, computer])
 
   useEffect(() => console.log('revs', revs), [revs])
   useEffect(() => console.log('artworks', artworks), [artworks])
@@ -62,6 +63,12 @@ function App() {
 
         <button type="submit" value="Send Bitcoin">Create Artwork</button>
       </form>
+
+      <h2>Your Artworks</h2>
+      <ul className="flex-container">
+        {artworks.map(artwork => <Card artwork={artwork} key={artwork.title + artwork.year} />)}
+      </ul>
+
     </div>
   );
 }

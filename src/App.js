@@ -4,7 +4,7 @@ import logo from './logo.svg';
 import './App.css';
 
 function App() {
-  const [computer] = useState(new Computer({ seed: 'describe install ostrich blast region era course junior feed acoustic galaxy annual'}))
+  const [computer] = useState(new Computer({ seed: 'emotion drill fun purpose visit voyage office ancient inform chunk tuition hope'}))
   const [balance, setBalance] = useState(0)
 
   const [title, setTitle] = useState('')
@@ -18,7 +18,10 @@ function App() {
 
   const handleSubmit = async (evt) => {
     evt.preventDefault()
-    console.log('creating artwork', title, year)
+    const response = await fetch(process.env.PUBLIC_URL + '/artwork.js')
+    const Artwork = await response.text()
+    const artwork = await computer.new(Artwork, [title, artist, year, url])
+    console.log('created artwork', artwork)
   }
 
   return (

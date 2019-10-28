@@ -4,7 +4,7 @@ import './App.css'
 import Card from './card'
 
 function App() {
-  const [computer] = useState(new Computer({ seed: 'emotion drill fun purpose visit voyage office ancient inform chunk tuition hope'}))
+  const [computer, setComputer] = useState(new Computer({ seed: 'emotion drill fun purpose visit voyage office ancient inform chunk tuition hope'}))
   const [balance, setBalance] = useState(0)
 
   const [title, setTitle] = useState('')
@@ -14,15 +14,15 @@ function App() {
 
   const [revs, setRevs] = useState([])
   const [artworks, setArtworks] = useState([])
+  const [refresh, setRefresh] = useState(0)
 
   useEffect(() => {
     const fetchRevs = async () => {
       setBalance(await computer.db.wallet.getBalance())
       setRevs(await Computer.getOwnedRevs(computer.db.wallet.getPublicKey()))
-      setTimeout(fetchRevs, 5000)
     }
     fetchRevs()
-  }, [])
+  }, [computer.db.wallet, refresh])
 
   useEffect(() => {
     const fetchArtworks = async () => {
@@ -46,7 +46,10 @@ function App() {
     <div className="App">
       <h2>Wallet</h2>
       <b>Address</b>&nbsp;{computer.db.wallet.getAddress().toString()}<br />
-      <b>Balance</b>&nbsp;{balance}
+      <b>Public Key</b>&nbsp;{computer.db.wallet.getPublicKey().toString()}<br />
+      <b>Balance</b>&nbsp;{balance}<br />
+      <button type="submit" onClick={() => setComputer(new Computer())}>Generate New Wallet</button>
+      <button type="submit" onClick={() => setRefresh(refresh + 1)}>Refresh</button>
 
       <h2>Create new Artwork</h2>
       <form onSubmit={handleSubmit}>

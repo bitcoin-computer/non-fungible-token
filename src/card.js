@@ -2,10 +2,9 @@ import './card.css';
 import React from 'react';
 
 export default ({ artwork }) => {
-  const handleClick = async () => {
-    const publicKey = prompt('Please enter the public key of the new user')
-    await artwork.setOwner(publicKey)
-    console.log(`updated owner ${artwork.title} of to ${artwork._owners[0]}`)
+  const handleClick = () => {
+    const publicKey = prompt("Please enter the public key of the new owner")
+    artwork.setOwner(publicKey)
   }
 
   return artwork

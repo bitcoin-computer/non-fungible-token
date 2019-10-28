@@ -5,4 +5,8 @@ export default class Artwork {
     this.year = year
     this.url = url
   }
+
+  setOwner(owner) {
+    this._owner = owner
+  }
 }

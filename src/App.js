@@ -6,8 +6,11 @@ import './App.css';
 function App() {
   const [computer] = useState(new Computer({ seed: 'describe install ostrich blast region era course junior feed acoustic galaxy annual'}))
   const [balance, setBalance] = useState(0)
-  const [amount, setAmount] = useState(0)
-  const [to, setTo] = useState('')
+
+  const [title, setTitle] = useState('')
+  const [artist, setArtist] = useState('')
+  const [year, setYear] = useState('')
+  const [url, setUrl] = useState('')
 
   useEffect(async () => {
     setBalance(await computer.db.wallet.getBalance())
@@ -15,8 +18,7 @@ function App() {
 
   const handleSubmit = async (evt) => {
     evt.preventDefault()
-    const { txId } = await computer.db.wallet.send(parseInt(amount), to)
-    alert(`Sent ${amount} to ${to} in tx with id\n${txId}`)
+    console.log('creating artwork', title, year)
   }
 
   return (
@@ -25,19 +27,21 @@ function App() {
       <b>Address</b>&nbsp;{computer.db.wallet.getAddress().toString()}<br />
       <b>Balance</b>&nbsp;{balance}
 
-      <h3>Send</h3>
+      <h2>Create new Artwork</h2>
       <form onSubmit={handleSubmit}>
-        <label>
-          Amount&nbsp;
-          <input type="number" value={amount} onChange={e => setAmount(e.target.value)}>
-          </input>
-        </label><br />
-        <label>
-          To&nbsp;
-          <input type="string" value={to} onChange={e => setTo(e.target.value)}>
-          </input>
-        </label><br />
-        <input type="submit" value="Send Bitcoin"></input>
+        Title<br />
+        <input type="string" value={title} onChange={e => setTitle(e.target.value)} />
+
+        Artist<br />
+        <input type="string" value={artist} onChange={e => setArtist(e.target.value)} />
+
+        Year<br />
+        <input type="string" value={year} onChange={e => setYear(e.target.value)} />
+
+        Url<br />
+        <input type="string" value={url} onChange={e => setUrl(e.target.value)} />
+
+        <button type="submit" value="Send Bitcoin">Create Artwork</button>
       </form>
     </div>
   );

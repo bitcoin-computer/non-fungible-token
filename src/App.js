@@ -9,7 +9,6 @@ function App() {
 
   const [title, setTitle] = useState('')
   const [artist, setArtist] = useState('')
-  const [year, setYear] = useState('')
   const [url, setUrl] = useState('')
 
   const [revs, setRevs] = useState([])
@@ -39,7 +38,7 @@ function App() {
     evt.preventDefault()
     const response = await fetch(process.env.PUBLIC_URL + '/artwork.js')
     const Artwork = await response.text()
-    const artwork = await computer.new(Artwork, [title, artist, year, url])
+    const artwork = await computer.new(Artwork, [title, artist, url])
     console.log('created artwork', artwork)
   }
 
@@ -59,9 +58,6 @@ function App() {
         Artist<br />
         <input type="string" value={artist} onChange={e => setArtist(e.target.value)} />
 
-        Year<br />
-        <input type="string" value={year} onChange={e => setYear(e.target.value)} />
-
         Url<br />
         <input type="string" value={url} onChange={e => setUrl(e.target.value)} />
 
@@ -70,7 +66,7 @@ function App() {
 
       <h2>Your Artworks</h2>
       <ul className="flex-container">
-        {artworks.map(artwork => <Card artwork={artwork} key={artwork.title + artwork.year} />)}
+        {artworks.map(artwork => <Card artwork={artwork} key={artwork.title + artwork.artist} />)}
       </ul>
 
     </div>

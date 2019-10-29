@@ -20,8 +20,9 @@ function App() {
     const fetchRevs = async () => {
       setBalance(await computer.db.wallet.getBalance())
       setRevs(await Computer.getOwnedRevs(computer.db.wallet.getPublicKey()))
+      setRefresh(refresh + 1)
     }
-    fetchRevs()
+    setTimeout(fetchRevs, 5000)
   }, [computer.db.wallet, refresh])
 
   useEffect(() => {
@@ -49,7 +50,6 @@ function App() {
       <b>Public Key</b>&nbsp;{computer.db.wallet.getPublicKey().toString()}<br />
       <b>Balance</b>&nbsp;{balance}<br />
       <button type="submit" onClick={() => setComputer(new Computer())}>Generate New Wallet</button>
-      <button type="submit" onClick={() => setRefresh(refresh + 1)}>Refresh</button>
 
       <h2>Create new Artwork</h2>
       <form onSubmit={handleSubmit}>

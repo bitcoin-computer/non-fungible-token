@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Computer from 'bitcoin-computer'
 import './App.css'
 import Card from './card'
+import Artwork from './artwork'
 
 function App() {
   const [computer, setComputer] = useState(new Computer({ seed: 'emotion drill fun purpose visit voyage office ancient inform chunk tuition hope'}))
@@ -19,9 +20,9 @@ function App() {
     const fetchRevs = async () => {
       setBalance(await computer.db.wallet.getBalance())
       setRevs(await Computer.getOwnedRevs(computer.db.wallet.getPublicKey()))
-      setRefresh(refresh + 1)
+      setTimeout(() => setRefresh(refresh + 1), 3500)
     }
-    setTimeout(fetchRevs, 5000)
+    fetchRevs()
   }, [computer.db.wallet, refresh])
 
   useEffect(() => {
@@ -36,8 +37,6 @@ function App() {
 
   const handleSubmit = async (evt) => {
     evt.preventDefault()
-    const response = await fetch(process.env.PUBLIC_URL + '/artwork.js')
-    const Artwork = await response.text()
     const artwork = await computer.new(Artwork, [title, artist, url])
     console.log('created artwork', artwork)
   }

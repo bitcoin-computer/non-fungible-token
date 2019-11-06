@@ -1,7 +1,6 @@
-A minimal Bitcoin based application for creating and sharing tokens. You can create a new artwork token and send it to a friend. The screen refreshes every few seconds to show the tokens owned by each user. Build using [Bitcoin|Computer](https://bitcoin-computer.gitbook.io/docs/).
+A minimal application for creating and sharing tokens. You can create a new artwork token and send it to a friend. The screen refreshes every few seconds to show the tokens owned by each user. Build using [Bitcoin|Computer](https://bitcoin-computer.gitbook.io/docs/).
 
-<img src="https://ibb.co/9hRp3GY" alt="drawing" width="400"/>
-
+![app image](/public/screen-shot.png)
 
 You can find more information in the [docs](https://bitcoin-computer.gitbook.io/docs/). Also check out the corresponding [Youtube tutorial](https://www.youtube.com/watch?v=SnTwevzmRrs).
 

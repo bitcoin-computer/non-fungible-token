@@ -67,7 +67,6 @@ function App() {
       <ul className="flex-container">
         {artworks.map(artwork => <Card artwork={artwork} key={artwork.title + artwork.artist} />)}
       </ul>
-
     </div>
   );
 }

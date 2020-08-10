@@ -5,7 +5,7 @@ import Card from './card'
 import Artwork from './artwork'
 
 function App() {
-  const [computer, setComputer] = useState(new Computer({ seed: 'emotion drill fun purpose visit voyage office ancient inform chunk tuition hope'}))
+  const [computer, setComputer] = useState(new Computer({ seed: 'title mercy exhibit wasp diesel tell state snow swamp benefit electric admit', chain: 'BSV' }))
   const [balance, setBalance] = useState(0)
 
   const [title, setTitle] = useState('')
@@ -19,7 +19,8 @@ function App() {
   useEffect(() => {
     const fetchRevs = async () => {
       setBalance(await computer.db.wallet.getBalance())
-      setRevs(await Computer.getOwnedRevs(computer.db.wallet.getPublicKey()))
+      const revs = await computer.getOwnedRevs(computer.db.wallet.getPublicKey())
+      setRevs(revs.map(({ txId, virtualIndex }) => `${txId}:${virtualIndex}`))
       setTimeout(() => setRefresh(refresh + 1), 3500)
     }
     fetchRevs()
@@ -46,7 +47,7 @@ function App() {
       <h2>Wallet</h2>
       <b>Address</b>&nbsp;{computer.db.wallet.getAddress().toString()}<br />
       <b>Public Key</b>&nbsp;{computer.db.wallet.getPublicKey().toString()}<br />
-      <b>Balance</b>&nbsp;{balance}<br />
+      <b>Balance</b>&nbsp;{balance/1e8} {computer.db.wallet.restClient.chain}<br />
       <button type="submit" onClick={() => setComputer(new Computer())}>Generate New Wallet</button>
 
       <h2>Create new Artwork</h2>

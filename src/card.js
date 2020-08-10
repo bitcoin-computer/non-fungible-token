@@ -4,7 +4,7 @@ import React from 'react';
 export default ({ artwork }) => {
   const handleClick = () => {
     const publicKey = prompt("Please enter the public key of the new owner")
-    artwork.setOwner(publicKey)
+    if(publicKey) artwork.setOwner(publicKey)
   }
 
   return artwork

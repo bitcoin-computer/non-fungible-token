@@ -5,7 +5,10 @@ import Card from './card'
 import Artwork from './artwork'
 
 function App() {
-  const [computer, setComputer] = useState(new Computer({ seed: 'title mercy exhibit wasp diesel tell state snow swamp benefit electric admit', chain: 'BSV' }))
+  const [computer, setComputer] = useState(new Computer({
+    seed: 'title mercy exhibit wasp diesel tell state snow swamp benefit electric admit',
+    chain: 'BSV'
+  }))
   const [balance, setBalance] = useState(0)
 
   const [title, setTitle] = useState('')
@@ -19,8 +22,7 @@ function App() {
   useEffect(() => {
     const fetchRevs = async () => {
       setBalance(await computer.db.wallet.getBalance())
-      const revs = await computer.getOwnedRevs(computer.db.wallet.getPublicKey())
-      setRevs(revs.map(({ txId, virtualIndex }) => `${txId}:${virtualIndex}`))
+      setRevs(await computer.getRevs(computer.db.wallet.getPublicKey()))
       setTimeout(() => setRefresh(refresh + 1), 3500)
     }
     fetchRevs()
@@ -48,7 +50,9 @@ function App() {
       <b>Address</b>&nbsp;{computer.db.wallet.getAddress().toString()}<br />
       <b>Public Key</b>&nbsp;{computer.db.wallet.getPublicKey().toString()}<br />
       <b>Balance</b>&nbsp;{balance/1e8} {computer.db.wallet.restClient.chain}<br />
-      <button type="submit" onClick={() => setComputer(new Computer())}>Generate New Wallet</button>
+      <button type="submit" onClick={() => setComputer(new Computer())}>
+        Generate New Wallet
+      </button>
 
       <h2>Create new Artwork</h2>
       <form onSubmit={handleSubmit}>

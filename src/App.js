@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react'
-import Computer from 'bitcoin-computer'
+import { Computer } from 'bitcoin-computer'
 import './App.css'
 import Card from './card'
 import Artwork from './artwork'
 
 function App() {
-  const [computer, setComputer] = useState(new Computer({
+  const [config, setConfig] = useState({
     seed: 'title mercy exhibit wasp diesel tell state snow swamp benefit electric admit',
-    chain: 'BSV'
-  }))
+    chain: 'BCH',
+    network: 'testnet',
+  })
+  const [computer, setComputer] = useState(new Computer(config))
+
   const [balance, setBalance] = useState(0)
 
   const [title, setTitle] = useState('')
@@ -23,7 +26,7 @@ function App() {
     const fetchRevs = async () => {
       setBalance(await computer.db.wallet.getBalance())
       setRevs(await computer.getRevs(computer.db.wallet.getPublicKey()))
-      setTimeout(() => setRefresh(refresh + 1), 3500)
+      setTimeout(() => setRefresh(refresh + 1), 20000)
     }
     fetchRevs()
   }, [computer.db.wallet, refresh])
@@ -50,7 +53,7 @@ function App() {
       <b>Address</b>&nbsp;{computer.db.wallet.getAddress().toString()}<br />
       <b>Public Key</b>&nbsp;{computer.db.wallet.getPublicKey().toString()}<br />
       <b>Balance</b>&nbsp;{balance/1e8} {computer.db.wallet.restClient.chain}<br />
-      <button type="submit" onClick={() => setComputer(new Computer())}>
+      <button type="submit" onClick={() => setComputer(new Computer(config))}>
         Generate New Wallet
       </button>
 

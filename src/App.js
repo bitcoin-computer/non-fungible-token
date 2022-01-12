@@ -5,12 +5,11 @@ import Card from './card'
 import Artwork from './artwork'
 
 function App() {
-  const [config, setConfig] = useState({
-    seed: 'title mercy exhibit wasp diesel tell state snow swamp benefit electric admit',
+  const [config] = useState({
     chain: 'BCH',
     network: 'testnet',
   })
-  const [computer, setComputer] = useState(new Computer(config))
+  const [computer, setComputer] = useState(new Computer({...config, seed: 'title mercy exhibit wasp diesel tell state snow swamp benefit electric admit'}))
 
   const [balance, setBalance] = useState(0)
 
@@ -29,7 +28,7 @@ function App() {
       setTimeout(() => setRefresh(refresh + 1), 20000)
     }
     fetchRevs()
-  }, [computer.db.wallet, refresh])
+  }, [computer, computer.db.wallet, refresh])
 
   useEffect(() => {
     const fetchArtworks = async () => {

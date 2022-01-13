@@ -8,12 +8,12 @@ export default ({ artwork }) => {
   }
 
   return artwork
-    ? (<div className="card" onClick={handleClick}>
+    ? (<li key={artwork._rev} className="card" onClick={handleClick}>
         <img src={artwork.url || artwork.imageUrl} alt={artwork.title} />
         <div className="container">
           <b>{artwork.title}</b><br />
           {artwork.artist}<br />
         </div>
-      </div>)
-    : <div></div>
+      </li>)
+    : <></>
 }

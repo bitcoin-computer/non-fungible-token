@@ -3,7 +3,6 @@ import { Computer } from "bitcoin-computer";
 import "./App.css";
 import Card from "./card";
 import Artwork from "./artwork";
-import Loader from "./loader";
 import { areEqual } from "./util";
 
 function App() {
@@ -82,7 +81,7 @@ function App() {
     } finally {
       setIsComputerLoading(false);
     }
-  }, 4000);
+  }, 3000);
 
   const artSendingInProgress = (flag) => {
     console.log('called from child')
@@ -119,7 +118,6 @@ function App() {
 
   return (
     <div className="App">
-      {(isLoading || isComputerLoading || isSendingArt) && <Loader />}{" "}
       {
         <div>
           <h2>Wallet</h2>
@@ -165,7 +163,7 @@ function App() {
           <h2>Your Artworks</h2>
           <ul className="flex-container">
             {artworks.map((artwork) => (
-              <Card artwork={artwork} setArtSending={artSendingInProgress} />
+              <Card artwork={artwork} setArtSending={artSendingInProgress} key={artwork.url}/>
             ))}
           </ul>{" "}
         </div>

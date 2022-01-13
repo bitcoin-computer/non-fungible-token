@@ -14,7 +14,7 @@ function App() {
   const [computer, setComputer] = useState(
     new Computer({
       ...config,
-      seed: "title mercy exhibit wasp diesel tell state snow swamp benefit electric admit",
+      seed: "tape orange right labor color jungle dust long curious team author bread",
     })
   );
 
@@ -29,7 +29,6 @@ function App() {
 
   const [revs, setRevs] = useState([]);
   const [artworks, setArtworks] = useState([]);
-  // const [refresh, setRefresh] = useState(0);
 
   function useInterval(callback, delay) {
     const savedCallback = useRef();
@@ -90,27 +89,6 @@ function App() {
     setIsSendingArt(flag);
   };
 
-  // useEffect(() => {
-  //   const fetchRevs = async () => {
-  //     setBalance(await computer.db.wallet.getBalance());
-  //     setRevs(await computer.getRevs(computer.db.wallet.getPublicKey()));
-  //     setTimeout(() => setRefresh(refresh + 1), 20000);
-  //   };
-  //   fetchRevs();
-  // }, [computer, computer.db.wallet, refresh]);
-
-  // useEffect(() => {
-  //   const fetchArtworks = async () => {
-  //     setArtworks(
-  //       await Promise.all(revs.map(async (rev) => computer.sync(rev)))
-  //     );
-  //   };
-  //   fetchArtworks();
-  // }, [revs, computer]);
-
-  // useEffect(() => console.log("revs", revs), [revs]);
-  // useEffect(() => console.log("artworks", artworks), [artworks]);
-
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     try {
@@ -132,6 +110,9 @@ function App() {
     } catch (err) {
       console.log("error occurred while creating art: ", err);
     } finally {
+      setTitle("")
+      setArtist("")
+      setUrl("")
       setIsLoading(false);
     }
   };
@@ -146,8 +127,7 @@ function App() {
           <br />
           <b>Public Key</b>&nbsp;{computer.db.wallet.getPublicKey().toString()}
           <br />
-          <b>Balance</b>&nbsp;{balance / 1e8}{" "}
-          {computer.db.wallet.restClient.chain}
+          <b>Balance</b>&nbsp;{balance / 1e8}{" LTC"}
           <br />
           <button
             type="submit"

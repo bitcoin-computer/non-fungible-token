@@ -2,12 +2,12 @@ import "./card.css";
 import React from "react";
 
 export default ({ artwork, setArtSending }) => {
-  const handleClick = () => {
+  const handleClick = async () => {
     const publicKey = prompt("Please enter the public key of the new owner");
     try {
       if (publicKey) {
         setArtSending(true);
-        artwork.setOwner(publicKey);
+        await artwork.setOwner(publicKey);
       }
     } catch (error) {
       console.log("error while sending NFT, ", error);

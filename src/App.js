@@ -4,6 +4,7 @@ import "./App.css";
 import Card from "./card";
 import Artwork from "./artwork";
 import Loader from "./loader";
+import { areEqual } from "./util";
 
 function App() {
   const [config] = useState({
@@ -20,12 +21,13 @@ function App() {
   const [balance, setBalance] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [isComputerLoading, setIsComputerLoading] = useState(true);
+  const [isSendingArt, setIsSendingArt] = useState(false);
 
   const [title, setTitle] = useState("");
   const [artist, setArtist] = useState("");
   const [url, setUrl] = useState("");
 
-  // const [revs, setRevs] = useState([]);
+  const [revs, setRevs] = useState([]);
   const [artworks, setArtworks] = useState([]);
   // const [refresh, setRefresh] = useState(0);
 
@@ -61,15 +63,20 @@ function App() {
         const newRevs = await computer.getRevs(
           computer.db.wallet.getPublicKey()
         );
-        const newArts = await Promise.all(
-          newRevs.map(async (rev) => computer.sync(rev))
-        );
         console.log("public key: ", computer.db.wallet.getPublicKey());
         console.log("revs", newRevs);
-        console.log("artworks", newArts);
+        // sync art work when revs are not same
+        if (!areEqual(revs, newRevs)) {
+          const newArts = await Promise.all(
+            newRevs.map(async (rev) => computer.sync(rev))
+          );
+          console.log("artworks", newArts);
+          setArtworks(newArts);
+        } else {
+          console.log("no new art added");
+        }
         setBalance(newBalance);
-        // setRevs(newRevs);
-        setArtworks(newArts);
+        setRevs(newRevs);
       }
     } catch (err) {
       console.log("error occurred while fetching wallet details: ", err);
@@ -77,6 +84,11 @@ function App() {
       setIsComputerLoading(false);
     }
   }, 4000);
+
+  const artSendingInProgress = (flag) => {
+    console.log('called from child')
+    setIsSendingArt(flag);
+  };
 
   // useEffect(() => {
   //   const fetchRevs = async () => {
@@ -126,7 +138,7 @@ function App() {
 
   return (
     <div className="App">
-      {isLoading || (isComputerLoading && <Loader />)}{" "}
+      {(isLoading || isComputerLoading || isSendingArt) && <Loader />}{" "}
       {
         <div>
           <h2>Wallet</h2>
@@ -173,7 +185,7 @@ function App() {
           <h2>Your Artworks</h2>
           <ul className="flex-container">
             {artworks.map((artwork) => (
-              <Card artwork={artwork} />
+              <Card artwork={artwork} setArtSending={artSendingInProgress} />
             ))}
           </ul>{" "}
         </div>

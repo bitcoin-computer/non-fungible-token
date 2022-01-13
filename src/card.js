@@ -1,19 +1,33 @@
-import './card.css';
-import React from 'react';
+import "./card.css";
+import React from "react";
 
-export default ({ artwork }) => {
+export default ({ artwork, setArtSending }) => {
   const handleClick = () => {
-    const publicKey = prompt("Please enter the public key of the new owner")
-    if(publicKey) artwork.setOwner(publicKey)
-  }
+    const publicKey = prompt("Please enter the public key of the new owner");
+    try {
+      if (publicKey) {
+        setArtSending(true);
+        artwork.setOwner(publicKey);
+      }
+    } catch (error) {
+      console.log("error while sending NFT, ", error);
+    } finally {
+      console.log("NFT sent successfully.");
+      setArtSending(false);
+    }
+  };
 
-  return artwork
-    ? (<li key={artwork._rev} className="card" onClick={handleClick}>
-        <img src={artwork.url || artwork.imageUrl} alt={artwork.title} />
-        <div className="container">
-          <b>{artwork.title}</b><br />
-          {artwork.artist}<br />
-        </div>
-      </li>)
-    : <></>
-}
+  return artwork ? (
+    <li key={artwork._rev} className="card" onClick={handleClick}>
+      <img src={artwork.url || artwork.imageUrl} alt={artwork.title} />
+      <div className="container">
+        <b>{artwork.title}</b>
+        <br />
+        {artwork.artist}
+        <br />
+      </div>
+    </li>
+  ) : (
+    <></>
+  );
+};

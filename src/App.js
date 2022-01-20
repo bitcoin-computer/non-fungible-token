@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Computer } from "bitcoin-computer";
+import { Computer } from "bitcoin-computer-lib";
 import "./App.css";
 import Card from "./card";
 import Artwork from "./artwork";

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "bitcoin-computer": "https://github.com/bitcoin-computer/bitcoin-computer-lib#0.5.0-alpha",
+    "bitcoin-computer-lib": "https://github.com/bitcoin-computer/bitcoin-computer-lib#0.5.0-alpha",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-scripts": "3.2.0"

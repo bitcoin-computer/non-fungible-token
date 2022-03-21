@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react'
-import Computer from 'bitcoin-computer'
+import { Computer } from 'bitcoin-computer-lib'
 import './App.css'
 import Card from './card'
 import Artwork from './artwork'
 
 function App() {
   const [computer, setComputer] = useState(new Computer({
-    seed: 'title mercy exhibit wasp diesel tell state snow swamp benefit electric admit',
-    chain: 'BSV'
+    chain: 'LTC',
+    network: 'regtest',
+    url: 'http://127.0.0.1:3000',
+    seed: 'travel upgrade inside soda birth essence junk merit never twenty system opinion'
   }))
   const [balance, setBalance] = useState(0)
 

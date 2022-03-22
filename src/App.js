@@ -7,13 +7,14 @@ import { areEqual } from "./util";
 
 function App() {
   const [config] = useState({
-    chain: "BCH",
-    network: "testnet",
+    chain: "LTC",
+    network: "regtest",
+    url: "http://localhost:3000",
   });
   const [computer, setComputer] = useState(
     new Computer({
       ...config,
-      seed: "tape orange right labor color jungle dust long curious team author bread",
+      seed: 'travel upgrade inside soda birth essence junk merit never twenty system opinion'
     })
   );
 

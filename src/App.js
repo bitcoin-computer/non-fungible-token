@@ -5,10 +5,13 @@ import Card from './card'
 import Artwork from './artwork'
 
 function App() {
-  const [computer, setComputer] = useState(new Computer({
+  const config = {
     chain: 'LTC',
     network: 'regtest',
     url: 'http://127.0.0.1:3000',
+  }
+  const [computer, setComputer] = useState(new Computer({
+    ...config,
     seed: 'travel upgrade inside soda birth essence junk merit never twenty system opinion'
   }))
   const [balance, setBalance] = useState(0)
@@ -52,7 +55,7 @@ function App() {
       <b>Address</b>&nbsp;{computer.db.wallet.getAddress().toString()}<br />
       <b>Public Key</b>&nbsp;{computer.db.wallet.getPublicKey().toString()}<br />
       <b>Balance</b>&nbsp;{balance/1e8} {computer.db.wallet.restClient.chain}<br />
-      <button type="submit" onClick={() => setComputer(new Computer())}>
+      <button type="submit" onClick={() => setComputer(new Computer(config))}>
         Generate New Wallet
       </button>
 

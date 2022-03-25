@@ -9,7 +9,8 @@ function App() {
   const [config] = useState({
     chain: "LTC",
     network: "regtest",
-    url: "http://localhost:3000",
+    // uncomment the next line to run locally
+    // url: "http://127.0.0.1:3000",
   });
   const [computer, setComputer] = useState(
     new Computer({

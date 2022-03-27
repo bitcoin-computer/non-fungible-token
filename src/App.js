@@ -8,8 +8,11 @@ import { areEqual } from "./util";
 function App() {
   const [config] = useState({
     chain: "LTC",
-    network: "regtest",
-    // uncomment the next line to run locally
+    network: "testnet",
+    url: "http://node.bitcoincomputer.io",
+
+    // Uncomment to run on regtest with a local Bitcoin Computer Node.
+    // network: "regtest",
     // url: "http://127.0.0.1:3000",
   });
   const [computer, setComputer] = useState(

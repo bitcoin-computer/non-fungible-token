@@ -3,7 +3,7 @@ A minimal application for creating and sharing tokens. You can create a new artw
 ![app image](/public/screen-shot.png)
 
 
-The application first creates a Computer object. You can configure the parameters to use <em>regtest</em> (local) or <em>testnet</em> newtwork modes. You can use a set of [BIP39 words] (https://iancoleman.io/bip39/) as seed.
+The application first creates a Computer object. You can configure the parameters to use <em>regtest</em> (local) or <em>testnet</em> network modes. You can use a set of [BIP39 words] (https://iancoleman.io/bip39/) as seed.
 
 
 ```javascript

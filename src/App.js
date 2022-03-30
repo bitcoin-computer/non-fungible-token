@@ -1,16 +1,18 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Computer } from "bitcoin-computer-lib";
-import "./App.css";
-import Card from "./card";
-import Artwork from "./artwork";
-import { areEqual } from "./util";
+import React, { useState, useEffect, useRef } from 'react';
+import { Computer } from 'bitcoin-computer-lib';
+import './App.css';
+import Card from './card';
+import Artwork from './artwork';
+import { areEqual } from './util';
 
 function App() {
   const [config] = useState({
-    chain: "LTC",
-    network: "regtest",
-    // uncomment the next line to run locally
-    // url: "http://127.0.0.1:3000",
+    chain: 'LTC',
+    network: 'testnet',
+    url: 'https://node.bitcoincomputer.io',
+    // to run locally, change network and url:
+    // network: 'regtest',
+    // url: 'http://127.0.0.1:3000',
   });
   const [computer, setComputer] = useState(
     new Computer({
@@ -20,13 +22,10 @@ function App() {
   );
 
   const [balance, setBalance] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isComputerLoading, setIsComputerLoading] = useState(true);
-  const [isSendingArt, setIsSendingArt] = useState(false);
 
-  const [title, setTitle] = useState("");
-  const [artist, setArtist] = useState("");
-  const [url, setUrl] = useState("");
+  const [title, setTitle] = useState('');
+  const [artist, setArtist] = useState('');
+  const [url, setUrl] = useState('');
 
   const [revs, setRevs] = useState([]);
   const [artworks, setArtworks] = useState([]);
@@ -52,8 +51,7 @@ function App() {
   }
 
   useEffect(() => {
-    console.log("new address generated");
-    setIsComputerLoading(true);
+    console.log('new address generated');
   }, [computer]);
 
   useInterval(async () => {
@@ -63,63 +61,58 @@ function App() {
         const newRevs = await computer.getRevs(
           computer.db.wallet.getPublicKey()
         );
-        console.log("public key: ", computer.db.wallet.getPublicKey());
-        console.log("revs", newRevs);
+        console.log('public key: ', computer.db.wallet.getPublicKey());
+        console.log('revs', newRevs);
         // sync art work when revs are not same
         if (!areEqual(revs, newRevs)) {
           const newArts = await Promise.all(
             newRevs.map(async (rev) => computer.sync(rev))
           );
-          console.log("artworks", newArts);
+          console.log('artworks', newArts);
           setArtworks(newArts);
         } else {
-          console.log("no new art added");
+          console.log('no new art added');
         }
         setBalance(newBalance);
         setRevs(newRevs);
       }
     } catch (err) {
-      console.log("error occurred while fetching wallet details: ", err);
-    } finally {
-      setIsComputerLoading(false);
+      console.log('error occurred while fetching wallet details: ', err);
     }
   }, 3000);
 
   const artSendingInProgress = (flag) => {
     console.log('called from child')
-    setIsSendingArt(flag);
   };
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     try {
       if (!title) {
-        alert("Provide valid title.");
+        alert('Provide valid title.');
         return;
       }
       if (!artist) {
-        alert("Provide valid artist.");
+        alert('Provide valid artist.');
         return;
       }
       if (!url) {
-        alert("Provide valid url.");
+        alert('Provide valid url.');
         return;
       }
-      setIsLoading(true);
       const artwork = await computer.new(Artwork, [title, artist, url]);
-      console.log("created artwork", artwork);
+      console.log('created artwork', artwork);
     } catch (err) {
-      console.log("error occurred while creating art: ", err);
+      console.log('error occurred while creating art: ', err);
     } finally {
-      setTitle("")
-      setArtist("")
-      setUrl("")
-      setIsLoading(false);
+      setTitle('')
+      setArtist('')
+      setUrl('')
     }
   };
 
   return (
-    <div className="App">
+    <div className='App'>
       {
         <div>
           <h2>Wallet</h2>
@@ -127,10 +120,10 @@ function App() {
           <br />
           <b>Public Key</b>&nbsp;{computer.db.wallet.getPublicKey().toString()}
           <br />
-          <b>Balance</b>&nbsp;{balance / 1e8}{" LTC"}
+          <b>Balance</b>&nbsp;{balance / 1e8}{' LTC'}
           <br />
           <button
-            type="submit"
+            type='submit'
             onClick={() => setComputer(new Computer(config))}
           >
             Generate New Wallet
@@ -140,34 +133,34 @@ function App() {
             Title
             <br />
             <input
-              type="string"
+              type='string'
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
             Artist
             <br />
             <input
-              type="string"
+              type='string'
               value={artist}
               onChange={(e) => setArtist(e.target.value)}
             />
             Url
             <br />
             <input
-              type="string"
+              type='string'
               value={url}
               onChange={(e) => setUrl(e.target.value)}
             />
-            <button type="submit" value="Send Bitcoin">
+            <button type='submit' value='Send Bitcoin'>
               Create Artwork
             </button>
           </form>
           <h2>Your Artworks</h2>
-          <ul className="flex-container">
+          <ul className='flex-container'>
             {artworks.map((artwork) => (
               <Card artwork={artwork} setArtSending={artSendingInProgress} key={artwork.url}/>
             ))}
-          </ul>{" "}
+          </ul>{' '}
         </div>
       }
     </div>

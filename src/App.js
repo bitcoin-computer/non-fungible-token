@@ -17,7 +17,7 @@ function App() {
   const [computer, setComputer] = useState(
     new Computer({
       ...config,
-      seed: 'travel upgrade inside soda birth essence junk merit never twenty system opinion'
+      seed: 'invest vacuum fee rookie door tool surround side embark squirrel symptom fit'
     })
   );
 
@@ -79,7 +79,7 @@ function App() {
     } catch (err) {
       console.log('error occurred while fetching wallet details: ', err);
     }
-  }, 3000);
+  }, 10000);
 
   const artSendingInProgress = (flag) => {
     console.log('called from child')
